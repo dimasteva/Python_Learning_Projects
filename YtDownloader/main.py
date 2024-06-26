@@ -1,20 +1,25 @@
-import requests
-from bs4 import BeautifulSoup
+import tkinter as tk
+from pytube import YouTube
 
-def fetch_random_quote():
-    url = "http://quotes.toscrape.com/random"
-    response = requests.get(url)
-    if response.status_code == 200:
-        html = response.text
-        soup = BeautifulSoup(html, 'html.parser')
-        quote_element = soup.find('span', class_='text')
-        if quote_element:
-            return quote_element.text.strip()
-    return "Unable to fetch a quote from the web at the moment."
+def download_video():
+    url = link.get()
+    video = YouTube(url)
+    stream = video.streams.get_highest_resolution()
+    stream.download()
 
-def main():
-    quote = fetch_random_quote()
-    print(quote)
+root = tk.Tk()
+root.title("YouTube Video Downloader")
+root.geometry("400x200")
 
-if __name__ == "__main__":
-    main()
+link = tk.StringVar()
+
+label = tk.Label(root, text="Unesite YouTube URL:")
+label.pack()
+
+entry = tk.Entry(root, textvariable=link)
+entry.pack()
+
+button = tk.Button(root, text="Preuzmi video", command=download_video, bg="blue", fg="white")
+button.pack()
+
+root.mainloop()
