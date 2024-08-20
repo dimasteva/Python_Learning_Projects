@@ -35,7 +35,7 @@ def recognize_speech():
                     app_name = match.group(1)
                     open_app(app_name)
                 else:
-                    print("Nije prepoznata aplikacija nakon komande 'open'.")
+                    print("Application not recognized after the 'open' command.")
         except sr.UnknownValueError:
             print("Text is not recognized")
         except sr.RequestError as e:
